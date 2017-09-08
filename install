@@ -42,12 +42,10 @@ umount /mnt
 passwd
 reboot
 
-无线网
 wifi-menu
-需要安装
 pacman -S wpa_supplicant dialog
 
------------EFI分区-----------
+-----------EFI路脰脟酶-----------
 mkfs.vfat -F32 /dev/sda1
 mkdir -p /boot/efi
 mount -t vfat /dev/sda1 /boot/efi
