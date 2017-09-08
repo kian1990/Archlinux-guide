@@ -42,10 +42,11 @@ umount /mnt
 passwd
 reboot
 
+-----------WLAN-----------
 wifi-menu
 pacman -S wpa_supplicant dialog
 
------------EFI·ÖÇø-----------
+-----------EFI-----------
 mkfs.vfat -F32 /dev/sda1
 mkdir -p /boot/efi
 mount -t vfat /dev/sda1 /boot/efi
