@@ -1,3 +1,7 @@
+----Create USB----
+dd bs=4M if=/home/archlinux.iso of=/dev/sdb status=progress && sync
+
+
 ip addr
 ip link set ens33 down
 systemctl stop dhcpcd
