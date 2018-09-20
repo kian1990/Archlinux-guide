@@ -1,16 +1,16 @@
 ----Create USB----
 dd bs=4M if=/home/archlinux.iso of=/dev/sdb status=progress && sync
 
-
 ip addr
 ip link set ens33 down
 systemctl stop dhcpcd
 cp /etc/netctl/examples/ethernet-static /etc/netctl/ens33
 vim /etc/netctl/ens33
 netctl start ens33
+netctl enable ens33
 
 cfdisk
-mkfs.ext4 /dev/sda1
+mkfs.xfs /dev/sda1
 mkswap /dev/sda2
 swapon /dev/sda2
 swapon -s
@@ -22,6 +22,7 @@ Server = http://mirrors.163.com/archlinux/$repo/os/$arch
 vim /etc/pacman.conf
 SigLevel = Never
 pacstrap /mnt
+pacman -S vim openssh zsh
 
 genfstab -U /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
@@ -29,7 +30,7 @@ arch-chroot /mnt /bin/bash
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 hwclock --systohc --utc
 
-nano /etc/locale.gen
+vim /etc/locale.gen
 en_US.UTF-8 UTF-8
 zh_CN.UTF-8 UTF-8
 
@@ -40,10 +41,11 @@ echo arch > /etc/hostname
 pacman -S grub os-prober
 grub-install --target=i386-pc --recheck /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
+passwd
 
 exit
-umount /mnt
-passwd
+cp /etc/zsh/zshrc /mnt/etc/zsh
+cp /etc/netctl/ens33 /mnt/etc/netctl
 reboot
 
 -----------WLAN-----------
